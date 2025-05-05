@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
 app.use(cors({
-  origin: 'http://localhost:5173', // ou seu frontend (ex: http://localhost:3000)
+  origin: ['http://localhost:5173', 'https://gisa-grandpix.netlify.app', 'https://gisa-grandpix.netlify.app:10000'],
   credentials: true // permite cookies serem enviados
 }));
+
 app.use(express.json());
 app.use(routes);
 app.use(cookieParser());

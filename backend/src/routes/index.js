@@ -9,6 +9,11 @@ const DesafioAtual = require("../models/DesafioAtual");
 const Historico = require("../models/Historico");
 const Desafios = require("../models/Desafios");
 
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
 router.get("/", homeController.index);
 
 router.post("/register", authController.register);

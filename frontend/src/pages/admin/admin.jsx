@@ -133,8 +133,8 @@ function AdminDashboard() {
           </button>
 
           <button
-            onClick={() => {
-              encerrarDesafio(localStorage.getItem("token"));
+            onClick={async () => {
+              await encerrarDesafio(localStorage.getItem("token"));
               navigate(0);
             }}
             disabled={desafio.pontos === 0}
@@ -178,8 +178,8 @@ function AdminDashboard() {
                 : "..."}
             </p>
             <button
-              onClick={() => {
-                selecionarVencedor(teamName, localStorage.getItem("token"));
+              onClick={async () => {
+                await selecionarVencedor(teamName, localStorage.getItem("token"));
                 navigate(0);
               }}
               disabled={desafio.pontos === 0}

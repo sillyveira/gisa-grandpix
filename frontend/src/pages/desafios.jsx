@@ -172,8 +172,8 @@ function Desafios() {
                 {isAdmin && (
                   <>
                     <button
-                      onClick={() => {
-                        selecionarDesafio(localStorage.getItem('token'), desafio);
+                      onClick={async () => {
+                        await selecionarDesafio(localStorage.getItem('token'), desafio);
                         navigate('/admin')
                         navigate(0)
                       }}

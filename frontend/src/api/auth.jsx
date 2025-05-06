@@ -1,5 +1,10 @@
 // src/api/auth.jsx
-const BASE_URL = 'https://gisa-grandpix.onrender.com'; // <-- altere aqui se mudar o backend
+const MODO = 'dev';
+
+const BASE_URL =
+  MODO === 'dev'
+    ? 'http://localhost:3000'
+    : 'https://gisa-grandpix.onrender.com';
 
 export async function criarDesafio(dados) {
   const res = await fetch(`${BASE_URL}/criar-desafio`, {

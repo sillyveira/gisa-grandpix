@@ -1,5 +1,5 @@
 // src/api/auth.jsx
-const MODO = 'dev';
+const MODO = 'prod';
 
 const BASE_URL =
   MODO === 'dev'
@@ -88,6 +88,23 @@ export async function apagarDesafio(dados) {
 
   return await res.json();
 }
+
+export async function removerParticipante(dados) {
+  const res = await fetch(`${BASE_URL}/remover-participante/${dados._id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({token: dados.token}),
+  });
+
+  if (!res.ok) {
+    throw new Error("Erro ao deletar participante");
+  }
+
+  return await res.json();
+}
+
 
 export async function getDesafios() {
   const res = await fetch(`${BASE_URL}/desafios`, {

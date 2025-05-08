@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getParticipantes } from '../../api/auth';
+import { getParticipantes, removerParticipante } from '../../api/auth';
 
 function RedBull() {
   const navigate = useNavigate();
   const [participantes, setParticipantes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isAdmin = localStorage.getItem("admin") === "true";
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchParticipantes = async () => {
@@ -65,7 +67,21 @@ function RedBull() {
                     className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center"
                   >
                     <span className="font-semibold text-gray-800">{membro.username}</span>
-                    <span className="text-sm text-gray-500">{membro.email}</span>
+
+                    {isAdmin && (<button
+                      onClick={async() => { 
+                        const dados = {
+                          token: token,
+                          _id: membro._id
+                        }
+                        await removerParticipante(dados);
+                        navigate(0);
+                       }} // Navega para a página anterior
+                      className="bg-red-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                    >
+                      Remover
+                    </button>)}
+
                   </li>
                 ))}
               </ul>

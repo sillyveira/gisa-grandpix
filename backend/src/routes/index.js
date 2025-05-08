@@ -183,6 +183,29 @@ router.delete("/desafios/:id", async (req, res) => {
   }
 });
 
+router.delete("/remover-participante/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { token } = req.body;
+
+    if (token !== '68') {
+      return res.status(500).json({ message: "Você não é Wesley Silveira" });
+    }
+
+    const usuarioDeletado = await User.findByIdAndDelete(id);
+
+    if (!usuarioDeletado) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    res.status(200).json({ message: "Usuário deletado com sucesso" });
+  } catch (error) {
+    console.error("Erro ao deletar usuário: ", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+});
+
+
 
 router.get("/pontuacao-equipes", async (req, res) => {
   try {

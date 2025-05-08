@@ -105,6 +105,21 @@ export async function removerParticipante(dados) {
   return await res.json();
 }
 
+export async function removerHistorico(dados) {
+  const res = await fetch(`${BASE_URL}/remover-historico/${dados._id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({token: dados.token}),
+  });
+
+  if (!res.ok) {
+    throw new Error("Erro ao deletar histórico");
+  }
+
+  return await res.json();
+}
 
 export async function getDesafios() {
   const res = await fetch(`${BASE_URL}/desafios`, {

@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { removerHistorico } from '../api/auth';
 
 function HistoricoDesafios() {
   const location = useLocation();
   const navigate = useNavigate();
   const historico = location.state?.historico || [];
-
+  const isAdmin = localStorage.getItem('admin') === 'true';
+  const token = localStorage.getItem('token');
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <header className="flex justify-between items-center mb-6">
@@ -37,11 +39,26 @@ function HistoricoDesafios() {
             return (
               <div
                 key={index}
-                className={`p-4 rounded shadow-md ${colors}`}
+                className={`p-4 rounded shadow-md flex flex-row items-center justify-between ${colors}`}
               >
+                <div>
                 <h3 className="text-xl font-semibold">{item.desafio}</h3>
                 <p className="text-sm">Equipe vencedora: {item.equipeVencedora}</p>
                 <p className="text-sm font-bold">Pontos ganhos: {item.pontos}</p>
+                </div>
+                {isAdmin && (<button
+                      onClick={async() => { 
+                        const dados = {
+                          token: token,
+                          _id: item._id
+                        }
+                        await removerHistorico(dados);
+                        navigate(-1);
+                       }} 
+                      className="bg-red-500 hover:bg-blue-600 h-fit text-white px-4 py-2 rounded"
+                    >
+                      Remover
+                    </button>)}
               </div>
             );
           })
